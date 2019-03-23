@@ -40,6 +40,7 @@ timezone America/New_York
 # System bootloader configuration
 bootloader --location=mbr
 
+# manually partition everything
 clearpart --all --initlabel
 part swap --asprimary --fstype="swap" --size=1024
 part /boot --fstype xfs --size=300
@@ -51,6 +52,8 @@ logvol / --fstype xfs --name=lv_01 --vgname=root_vg01 --size=1 --grow
 @^minimal
 @core
 %end
-%addon com_redhat_kdump --disable --reserve-mb='auto'
+
+#%addon com_redhat_kdump --enable --reserve-mb='auto'
+%addon com_redhat_kdump --disable
 %end
 
