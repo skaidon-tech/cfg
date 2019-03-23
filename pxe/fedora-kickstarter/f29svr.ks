@@ -32,7 +32,7 @@ lang en_US
 selinux --disabled
 
 # Installation logging level
-logging level=info
+logging --level=info
 
 # System timezone
 timezone America/New_York
