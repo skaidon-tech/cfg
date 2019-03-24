@@ -13,6 +13,12 @@ rootpw --iscrypted $6$p522YzH0mV8MdojZ$p1ZnTOmW7RDWiepEFSdZWftt6pJ9iAmBQZ1xHmWit
 # System authorization information
 auth useshadow passalgo=sha512
 
+# create admin user
+user --name=nodectl --uid=5000 --gid=5000 --iscrypted --password=$6$NVeVElwTvav6t1hh$BqeQo9zJghDsv1GtPVvcTiOwLgiljR9hwbIMAnHP/KEEQQc1nZIinEPYcJJotn5uAz8y0I0LYHC8joowBd4jk0
+
+# setup authorized_keys for nodectl user
+sshkey --username=nodectl "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCvzMWWQ3zPwfTClFDE4+oYxWZNhFXJsDUKfXoghlA0X2YEBivS/Q4MdzvV6F5xZ3jkqLUCsdAwZyoQbCpJgoToj9fQkZPyi03JTvFUPJ8xGCKQcd56X7ZuCqut0bBLD7gpqQQzTVUiNXHbA84XWRGk5FQZJN8xDVoRmpm7I552X2EdNf3MFoLDyilBSjqzd/MKsdH6lG9JusqPC/oDqnnE8aS8KCtNkAvSqZsUSlMo0ZGpdELAsZVs98QCszDsUIvchtc39GNvKdzoGsoq8z5Qg0+ASdwN3YMYip3dJRKijvMJiQNYj//p4y5JbhJFdzAtmrg7wT67nldNOz4Eg1sx nodectl@delvin-vm-f29svr"
+
 # Use graphical install
 cmdline
 
