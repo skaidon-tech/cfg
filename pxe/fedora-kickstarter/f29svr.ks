@@ -19,10 +19,16 @@ cmdline
 #remove initial setup on first boot
 firstboot --disable
 
-# System keyboard
+# auto-agree to EULA
+eula --agreed
+
+# reboot afer installation
+reboot
+
+# System keyboard to US
 keyboard us
 
-# System language
+# System language to English
 lang en_US
 
 # SELinux configuration
