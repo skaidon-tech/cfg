@@ -58,10 +58,17 @@ ignoredisk --only-use=sda
 #logvol / --fstype xfs --name=lv_01 --vgname=root_vg01 --size=1 --grow
 
 %packages
+net-tools
+curl-minimal
 python3
 %end
 
 #%addon com_redhat_kdump --enable --reserve-mb='auto'
 %addon com_redhat_kdump --disable
+%end
+
+%post --nochroot
+# put commands here to run after install
+ls -la /mnt/sysimage/bin/hostname
 %end
 
