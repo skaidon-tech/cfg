@@ -5,7 +5,6 @@
 firewall --disabled
 
 # specify location of packages
-install
 url --url="ftp://192.168.3.146/os_images/Fedora-Server-dvd-x86_64-29-1.2"
 
 # Root password
@@ -36,10 +35,13 @@ logging --level=info
 timezone America/New_York
 
 # System bootloader configuration
-bootloader --location=mbr
+bootloader --location=mbr --boot-drive=sda
 
 # automatically partition
-autopart --nohome
+autopart --nohome --type=lvm
+zerombr
+clearpart --all --drives=sda
+ignoredisk --only-use=sda
 
 # manually partition everything
 #clearpart --all --initlabel
