@@ -59,7 +59,7 @@ ignoredisk --only-use=sda
 
 %packages
 net-tools
-curl-minimal
+curl
 python3
 %end
 
