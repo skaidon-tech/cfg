@@ -76,7 +76,7 @@ python3
 %addon com_redhat_kdump --disable
 %end
 
-%post --nochroot
+%post --log=/root/ks-post.log
 # put commands here to run after install
 # add sudo group to permit passwordless escalation for ansible
 echo "sudo ALL = (ALL) NOPASSWD: ALL" >> /etc/sudoers
