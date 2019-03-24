@@ -52,8 +52,7 @@ ignoredisk --only-use=sda
 #logvol / --fstype xfs --name=lv_01 --vgname=root_vg01 --size=1 --grow
 
 %packages
-@^minimal
-@core
+python3
 %end
 
 #%addon com_redhat_kdump --enable --reserve-mb='auto'
