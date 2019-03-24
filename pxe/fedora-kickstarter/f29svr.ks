@@ -4,11 +4,9 @@
 # Firewall configuration
 firewall --disabled
 
-# Install OS instead of upgrade
+# specify location of packages
 install
-nfs --server=192.168.3.146 --dir=/data/Software/OS/Fedora-Server-dvd-x86_64-29-1.2
-# Use FTP installation media
-#url --url="ftp://172.168.1.11/pub/"
+url --url="ftp://192.168.3.146/os_images/Fedora-Server-dvd-x86_64-29-1.2"
 
 # Root password
 rootpw --iscrypted $1$16UFOW3O$HYLRvEgT8qUZN2yG94.m2/
