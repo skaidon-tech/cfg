@@ -8,7 +8,7 @@ firewall --disabled
 url --url="ftp://192.168.3.146/os_images/Fedora-Server-dvd-x86_64-29-1.2"
 
 # Root password
-rootpw --iscrypted $1$16UFOW3O$HYLRvEgT8qUZN2yG94.m2/
+rootpw --iscrypted $6$p522YzH0mV8MdojZ$p1ZnTOmW7RDWiepEFSdZWftt6pJ9iAmBQZ1xHmWitANejQUABr843JQdKZ7zuYy7P2O1.77a/F6QM8vXHBZQY/
 
 # System authorization information
 auth useshadow passalgo=sha512
