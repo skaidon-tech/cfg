@@ -69,6 +69,7 @@ ignoredisk --only-use=sda
 %packages
 net-tools
 curl
+tar
 python3
 %end
 
