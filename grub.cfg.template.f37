@@ -1,28 +1,23 @@
 # sourced from: https://docs.fedoraproject.org/en-US/fedora/f36/install-guide/advanced/Network_based_Installations/
 # and adapted for f37
 
+set default 0
+set timeout=10
+
 function load_video {
-    insmod efi_gop
-	  insmod efi_uga
-	  insmod video_bochs
-	  insmod video_cirrus
-	  insmod all_video
+  insmod efi_gop
+  insmod efi_uga
+  insmod video_bochs
+  insmod video_cirrus
+  insmod all_video
 }
 
 load_video
 set gfxpayload=keep
 insmod gzio
 
-menuentry 'Exit this grub' {
-    exit
+menuentry 'Install Fedora 37 x64 Server KS'  --class fedora --class gnu-linux --class gnu --class os {
+    linuxefi f37/vmlinuz ip=dhcp inst.repo=https://download.fedoraproject.org/pub/fedora/linux/releases/37/Server/x86_64/os/ inst.ks=https://raw.githubusercontent.com/rtzcoder/cfg/master/pxe/fedora-kickstarter/f37svr.ks
+    initrdefi f37/initrd.img
 }
 
-menuentry 'Install Fedora 64-bit'  --class fedora --class gnu-linux --class gnu --class os {
-    linux $fw_path/f37/vmlinuz ip=dhcp inst.repo=https://download.fedoraproject.org/pub/fedora/linux/releases/37/Server/x86_64/os/
-	  initrd $fw_path/f37/initrd.img
-}
-
-menuentry 'Install Fedora 37 Server'  --class fedora --class gnu-linux --class gnu --class os {
-    kernel f37/vmlinuz
-	  append initrd=f37/initrd.img inst.repo=https://download.fedoraproject.org/pub/fedora/linux/releases/37/Server/x86_64/os/ ip=dhcp ks=https://raw.githubusercontent.com/rtzcoder/cfg/master/pxe/fedora-kickstarter/f37svr.ks
-}
