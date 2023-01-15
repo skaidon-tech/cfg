@@ -11,7 +11,8 @@ url --url="ftp://192.168.3.56/os_images/Fedora-Server-dvd-x86_64-37-1.7"
 rootpw --lock
 
 # System authorization information
-auth useshadow passalgo=sha512
+# auth useshadow passalgo=sha512
+# deprecated now in favor of authselect, but for now lets remove
 
 # create sudo group
 group --name=sudo --gid=4999
