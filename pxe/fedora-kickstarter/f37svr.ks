@@ -47,9 +47,6 @@ lang en_US
 # SELinux configuration
 selinux --disabled
 
-# Installation logging level
-logging --level=info
-
 # System timezone
 timezone America/New_York
 
