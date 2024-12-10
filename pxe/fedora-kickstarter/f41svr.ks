@@ -51,13 +51,13 @@ selinux --disabled
 timezone America/New_York
 
 # System bootloader configuration
-bootloader --location=mbr --boot-drive=sda
+bootloader --location=mbr --boot-drive=nvme
 
 # automatically partition
 autopart --nohome --type=lvm
 zerombr
-clearpart --all --drives=sda
-ignoredisk --only-use=sda
+clearpart --all --drives=nvme
+ignoredisk --only-use=nvme
 
 %packages
 net-tools
