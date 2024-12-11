@@ -81,7 +81,7 @@ logvol /                   --fstype="xfs"   --size="50000"  --name="root"    --v
 logvol /var                --fstype="xfs"   --size="5000"   --name="var"     --vgname="vg_system"
 logvol /var/log            --fstype="xfs"   --size="5000"   --name="var_log" --vgname="vg_system"
 
-bootloader --location=partition
+bootloader --location=mbr
 
 #logvol /home               --fstype="xfs"   --size="5000" --name="home"    --vgname="vg_system" --grow
 
