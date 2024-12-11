@@ -4,9 +4,23 @@
 # Use the following command to generate your grub password hash:
 #   grub2-mkpasswd-pbkdf2
 
-# temporary make interactive so we can debug
-# command is not recognized, maybe deprecated?
-# interactive
+# section order
+#    command
+#        optional addon section
+#    %packages section
+#    %pre %post and %onerror section in any order and not required
+
+#version=DEVEL
+
+# Keyboard layouts
+keyboard --vckeymap=us --xlayouts='us'
+# System language
+lang en_US.UTF-8
+
+%packages
+@^server-product-environment
+
+%end
 
 # Firewall configuration
 firewall --disabled
@@ -42,11 +56,6 @@ eula --agreed
 # reboot afer installation
 reboot
 
-# System keyboard to US
-keyboard us
-
-# System language to English
-lang en_US
 
 # SELinux configuration
 selinux --disabled
@@ -54,29 +63,19 @@ selinux --disabled
 # System timezone
 timezone America/New_York
 
-# automatically partition
+# partitioning related commands
+# Generated using Blivet version 3.11.0
 ignoredisk --only-use=nvme0n1
-
-clearpart --all --drives=nvme0n1 --initlabel
-
-# format all disks
-zerombr
-
-autopart --nohome --type=lvm
-
 # System bootloader configuration
-bootloader --append="crashkernel=auto systemd.zram=0" --location=mbr --boot-drive=nvme0n1 --leavebootorder
+bootloader --location=mbr --boot-drive=nvme0n1
+autopart
+# Partition clearing information
+clearpart --none --initlabel
 
-%packages
-net-tools
-curl
-tar
-python3
-%end
 
 #%addon com_redhat_kdump --enable --reserve-mb='auto'
-%addon com_redhat_kdump --disable
-%end
+#%addon com_redhat_kdump --disable
+#%end
 
 %post --log=/root/ks-post.log
 # put commands here to run after install
