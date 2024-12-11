@@ -4,9 +4,9 @@
 # Use the following command to generate your grub password hash:
 #   grub2-mkpasswd-pbkdf2
 
-%pre
-modprobe btrfs || echo "Failed to load btrfs module" >> /tmp/kickstart.log
-%end
+#%pre
+#modprobe btrfs || echo "Failed to load btrfs module" >> /tmp/kickstart.log
+#%end
 
 # Keyboard layouts
 keyboard --vckeymap=us --xlayouts='us'
@@ -68,19 +68,21 @@ clearpart --all --initlabel
 
 bootloader --location=mbr --boot-drive=nvme0n1
 
+reqpart --add-boot
+
 #zerombr
 
-## System Disk
+# System Disk
 #part /boot/efi             --fstype=efi   --size=600    --ondisk=nvme0n1
 #part /boot                 --fstype=xfs   --size=1024   --ondisk=nvme0n1
 
-#part pv.10                 --fstype=lvmpv --size=61000 --ondisk=nvme0n1 --grow
-#volgroup vg_system pv.10
-#logvol /                   --fstype=xfs   --size=50000  --name=root    --vgname=vg_system
-#logvol /var                --fstype=xfs   --size=5000   --name=var     --vgname=vg_system
-#logvol /var/log            --fstype=xfs   --size=5000   --name=var_log --vgname=vg_system
+part pv.10                 --fstype=lvmpv --size=61000 --ondisk=nvme0n1 --grow
+volgroup vg_system pv.10
+logvol /                   --fstype=xfs   --size=50000  --name=root    --vgname=vg_system
+logvol /var                --fstype=xfs   --size=5000   --name=var     --vgname=vg_system
+logvol /var/log            --fstype=xfs   --size=5000   --name=var_log --vgname=vg_system
 
-autopart
+#autopart
 
 #logvol /home               --fstype="xfs"   --size="5000" --name="home"    --vgname="vg_system" --grow
 
