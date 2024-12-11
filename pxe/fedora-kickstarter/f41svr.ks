@@ -69,10 +69,10 @@ timezone America/New_York
 ignoredisk --only-use=nvme0n1
 
 zerombr
-clearpart --all --initlabel --disklabel="gpt"
+clearpart --drives=nvme0n1 --all --initlabel
 
 ## System Disk
-part /boot/efi             --fstype="efi"   --size="600"    --ondisk="nvme0n1"
+part /boot/efi             --fstype=efi   --size=600    --ondisk="nvme0n1"
 part /boot                 --fstype="xfs"   --size="1024"   --ondisk="nvme0n1"
 
 part pv.10                 --fstype="lvmpv" --size="61000" --ondisk="nvme0n1" --grow
@@ -81,7 +81,7 @@ logvol /                   --fstype="xfs"   --size="50000"  --name="root"    --v
 logvol /var                --fstype="xfs"   --size="5000"   --name="var"     --vgname="vg_system"
 logvol /var/log            --fstype="xfs"   --size="5000"   --name="var_log" --vgname="vg_system"
 
-bootloader
+bootloader --location=partition
 
 #logvol /home               --fstype="xfs"   --size="5000" --name="home"    --vgname="vg_system" --grow
 
