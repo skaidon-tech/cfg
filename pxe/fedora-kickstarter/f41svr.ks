@@ -4,6 +4,9 @@
 # Use the following command to generate your grub password hash:
 #   grub2-mkpasswd-pbkdf2
 
+# temporary make interactive so we can debug
+interactive
+
 # Firewall configuration
 firewall --disabled
 
