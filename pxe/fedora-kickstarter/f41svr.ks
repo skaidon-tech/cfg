@@ -83,7 +83,7 @@ clearpart --drives=nvme0n1 --all
 
 bootloader --boot-drive=nvme0n1
 
-autopart --nohome --type=lvm
+autopart --nohome
 
 #logvol /home               --fstype="xfs"   --size="5000" --name="home"    --vgname="vg_system" --grow
 
