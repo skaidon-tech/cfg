@@ -5,13 +5,14 @@
 #   grub2-mkpasswd-pbkdf2
 
 # temporary make interactive so we can debug
-interactive
+# command is not recognized, maybe deprecated?
+# interactive
 
 # Firewall configuration
 firewall --disabled
 
 # specify location of packages
-url --url="ftp://192.168.3.56/os_images/Fedora-Server-dvd-x86_64-41-1.4"
+# url --url="ftp://192.168.3.56/os_images/Fedora-Server-dvd-x86_64-41-1.4"
 
 # Root password
 rootpw --lock
@@ -29,7 +30,7 @@ user --name=nodectl --uid=5000 --gid=5000 --groups=sudo --iscrypted --password=$
 # setup authorized_keys for nodectl user
 sshkey --username=nodectl "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC0H8PM9uCYWXrQETGf23BvIyV/XQEqoG0iUBs5cjDrkhwx1o5PKr7+CSBE2lCHqkDhKBEPPFsRXwD9sRlQmV+GoeSmyJ1CNJde3tYnGIJv0JxfJX/WSO3MEYC1qwW6DjkBgP43uSg4Xf+yZmT7KjrZw8cOeWZ8o20oR7u4ewl8d0G345x5hUe4gazJhz7VB1hGb4D02Djr/kT7L/ScBHM6pD8at3lmXmejWfv3w0j3ZLuuffjAdCWVBnPuWZr0izQtxqvNGrHDpGvX7gd2Y8EUP4JbvI24mRVOSTM2FGESZGvmT88mEnLeB2sWUaEt/2k0tf5gt7jW3mtylHES5NH8z/dBfYxa7g5dV3cIm/Dyvp0g8ge3uhBVRpoCV4uy/ErzwyKpc6kIjIX68LsopgQR8WoizO/fSuPEcFezovdGmcQhZ95NThUBUvUOiduLkvcYWuQ2+OjpBMbKnq5hB0p/5L+M6pjTdEoZvwMzDW2HoE/J9O+wmfwkgb8oHPfDDuMPBBS9MsDgPItpjhFw2S47SaLzrgborBdCDRu4/IefRJzLllNwDU2QQdoIWb1lbQogxXwRylIDwIExn9pZ0yPkYaChEtC0W+iGj+W8h+KmjPHV74OtCmyJKggtdxmX1jlyQaI5OoAytqkq23t/ylF26sJSdfWxgOg9lQjthYi7lw=="
 
-# Use graphical install
+# Use text install
 cmdline
 
 #remove initial setup on first boot
@@ -64,7 +65,7 @@ zerombr
 autopart --nohome --type=lvm
 
 # System bootloader configuration
-bootloader --append="crashkernel=auto" --location=mbr --boot-drive=nvme0n1 --leavebootorder
+bootloader --append="crashkernel=auto systemd.zram=0" --location=mbr --boot-drive=nvme0n1 --leavebootorder
 
 %packages
 net-tools
