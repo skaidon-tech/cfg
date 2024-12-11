@@ -26,7 +26,7 @@ lang en_US.UTF-8
 firewall --disabled
 
 # specify location of packages
-# url --url="ftp://192.168.3.56/os_images/Fedora-Server-dvd-x86_64-41-1.4"
+url --url="ftp://192.168.3.56/os_images/Fedora-Server-dvd-x86_64-41-1.4"
 
 # Root password
 rootpw --lock
