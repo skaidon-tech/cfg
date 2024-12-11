@@ -63,15 +63,28 @@ selinux --disabled
 # System timezone
 timezone America/New_York
 
-# partitioning related commands
-# Generated using Blivet version 3.11.0
-ignoredisk --only-use=nvme0n1
-# Partition clearing information
-clearpart --all --initlabel
+# Partitioning
+
+## Clearing
 zerombr
-# System bootloader configuration
-bootloader --location=mbr --boot-drive=nvme0n1
-autopart
+clearpart --all --initlabel --disklabel="gpt"
+
+## System Disk
+part /boot/efi             --fstype="efi"   --size="600"    --ondisk="nvme0n1"
+part /boot                 --fstype="xfs"   --size="1024"   --ondisk="nvme0n1"
+
+part pv.10                 --fstype="lvmpv" --size="61000" --ondisk="nvme0n1" --grow
+volgroup vg_system pv.10
+logvol /                   --fstype="xfs"   --size="50000"  --name="root"    --vgname="vg_system"
+logvol /var                --fstype="xfs"   --size="5000"   --name="var"     --vgname="vg_system"
+logvol /var/log            --fstype="xfs"   --size="5000"   --name="var_log" --vgname="vg_system"
+logvol /home               --fstype="xfs"   --size="100000" --name="home"    --vgname="vg_system" --grow
+
+## Data Disk
+#part pv.20                 --fstype="lvmpv" --size="210000" --ondisk="sda" --grow
+#volgroup vg_data pv.20
+#logvol /var/lib/libvirt    --fstype="xfs"   --size="100000" --name="var_lib_libvirt"    --vgname="vg_data"
+#logvol /var/lib/containers --fstype="xfs"   --size="100000" --name="var_lib_containers" --vgname="vg_data"
 
 #%addon com_redhat_kdump --enable --reserve-mb='auto'
 #%addon com_redhat_kdump --disable
