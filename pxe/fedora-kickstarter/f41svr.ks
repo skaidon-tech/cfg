@@ -66,12 +66,12 @@ timezone America/New_York
 # partitioning related commands
 # Generated using Blivet version 3.11.0
 ignoredisk --only-use=nvme0n1
+# Partition clearing information
+clearpart --all --initlabel
+zerombr
 # System bootloader configuration
 bootloader --location=mbr --boot-drive=nvme0n1
 autopart
-# Partition clearing information
-clearpart --none --initlabel
-
 
 #%addon com_redhat_kdump --enable --reserve-mb='auto'
 #%addon com_redhat_kdump --disable
