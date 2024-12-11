@@ -53,15 +53,15 @@ timezone America/New_York
 # automatically partition
 ignoredisk --only-use=nvme0n1
 
-# System bootloader configuration
-bootloader --append="crashkernel=auto" --location=mbr --boot-drive=nvme0n1
+clearpart --all --drives=nvme0n1 --initlabel
 
 # format all disks
 zerombr
 
-clearpart --all --drives=nvme0n1 --initlabel
-
 autopart --nohome --type=lvm
+
+# System bootloader configuration
+bootloader --append="crashkernel=auto" --location=mbr --boot-drive=nvme0n1 --leavebootorder
 
 %packages
 net-tools
