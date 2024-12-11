@@ -66,8 +66,12 @@ timezone America/New_York
 # Partitioning
 
 ## Clearing
+ignoredisk --only-use=nvme0n1
+
 zerombr
 clearpart --all --initlabel --disklabel="gpt"
+
+bootloader --location=mbr --boot-drive=nvme0n1
 
 ## System Disk
 part /boot/efi             --fstype="efi"   --size="600"    --ondisk="nvme0n1"
