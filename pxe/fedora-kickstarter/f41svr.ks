@@ -71,8 +71,6 @@ ignoredisk --only-use=nvme0n1
 zerombr
 clearpart --all --initlabel --disklabel="gpt"
 
-bootloader --location=mbr --boot-drive=nvme0n1
-
 ## System Disk
 part /boot/efi             --fstype="efi"   --size="600"    --ondisk="nvme0n1"
 part /boot                 --fstype="xfs"   --size="1024"   --ondisk="nvme0n1"
@@ -82,6 +80,9 @@ volgroup vg_system pv.10
 logvol /                   --fstype="xfs"   --size="50000"  --name="root"    --vgname="vg_system"
 logvol /var                --fstype="xfs"   --size="5000"   --name="var"     --vgname="vg_system"
 logvol /var/log            --fstype="xfs"   --size="5000"   --name="var_log" --vgname="vg_system"
+
+bootloader
+
 #logvol /home               --fstype="xfs"   --size="5000" --name="home"    --vgname="vg_system" --grow
 
 ## Data Disk
