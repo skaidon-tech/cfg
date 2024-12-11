@@ -69,19 +69,21 @@ timezone America/New_York
 ignoredisk --only-use=nvme0n1
 
 zerombr
-clearpart --drives=nvme0n1 --all --initlabel
+clearpart --drives=nvme0n1 --all
 
 ## System Disk
-part /boot/efi             --fstype=efi   --size=600    --ondisk="nvme0n1"
-part /boot                 --fstype="xfs"   --size="1024"   --ondisk="nvme0n1"
+#part /boot/efi             --fstype=efi   --size=600    --ondisk=nvme0n1
+#part /boot                 --fstype=xfs   --size=1024   --ondisk=nvme0n1
 
-part pv.10                 --fstype="lvmpv" --size="61000" --ondisk="nvme0n1" --grow
-volgroup vg_system pv.10
-logvol /                   --fstype="xfs"   --size="50000"  --name="root"    --vgname="vg_system"
-logvol /var                --fstype="xfs"   --size="5000"   --name="var"     --vgname="vg_system"
-logvol /var/log            --fstype="xfs"   --size="5000"   --name="var_log" --vgname="vg_system"
+#part pv.10                 --fstype=lvmpv --size=61000 --ondisk=nvme0n1 --grow
+#volgroup vg_system pv.10
+#logvol /                   --fstype=xfs   --size=50000  --name=root    --vgname=vg_system
+#logvol /var                --fstype=xfs   --size=5000   --name=var     --vgname=vg_system
+#logvol /var/log            --fstype=xfs   --size=5000   --name=var_log --vgname=vg_system
 
-bootloader --location=mbr
+bootloader --boot-drive=nvme0n1
+
+autopart --nohome
 
 #logvol /home               --fstype="xfs"   --size="5000" --name="home"    --vgname="vg_system" --grow
 
