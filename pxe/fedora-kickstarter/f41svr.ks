@@ -108,7 +108,8 @@ zerombr
 reqpart --add-boot
 
 # Create Physical Partition
-part pv.01 --ondrive=nvme0n1 --asprimary --size=40000 --grow --encrypted
+part pv.01 --ondrive=nvme0n1 --asprimary --size=40000 --grow
+#--encrypted
 volgroup vg pv.01
 logvol swap --hibernation --vgname=vg --name=swap
 logvol / --vgname=vg --name=fedora-root --size=25000 --grow --fstype=xfs
