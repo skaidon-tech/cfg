@@ -62,13 +62,13 @@ timezone America/New_York
 # Partitioning
 
 ## Clearing
-ignoredisk --only-use=nvme0n1
+#ignoredisk --only-use=nvme0n1
 
-clearpart --all --initlabel
+#clearpart --all --initlabel
 
-bootloader --location=mbr --boot-drive=nvme0n1
+#bootloader --location=mbr --boot-drive=nvme0n1
 
-reqpart --add-boot
+#reqpart --add-boot
 
 #zerombr
 
@@ -76,11 +76,11 @@ reqpart --add-boot
 #part /boot/efi             --fstype=efi   --size=600    --ondisk=nvme0n1
 #part /boot                 --fstype=xfs   --size=1024   --ondisk=nvme0n1
 
-part pv.10                 --fstype=lvmpv --size=61000 --ondisk=nvme0n1 --grow
-volgroup vg_system pv.10
-logvol /                   --fstype=xfs   --size=50000  --name=root    --vgname=vg_system
-logvol /var                --fstype=xfs   --size=5000   --name=var     --vgname=vg_system
-logvol /var/log            --fstype=xfs   --size=5000   --name=var_log --vgname=vg_system
+#part pv.10                 --fstype=lvmpv --size=61000 --ondisk=nvme0n1 --grow
+#volgroup vg_system pv.10
+#logvol /                   --fstype=xfs   --size=50000  --name=root    --vgname=vg_system
+#logvol /var                --fstype=xfs   --size=5000   --name=var     --vgname=vg_system
+#logvol /var/log            --fstype=xfs   --size=5000   --name=var_log --vgname=vg_system
 
 #autopart
 
@@ -95,6 +95,23 @@ logvol /var/log            --fstype=xfs   --size=5000   --name=var_log --vgname=
 #%addon com_redhat_kdump --enable --reserve-mb='auto'
 #%addon com_redhat_kdump --disable
 #%end
+
+bootloader --driveorder=nvme0n1
+
+# Remove all existing partitions
+clearpart --drives=nvme0n1 --all
+
+# zerombr
+zerombr
+
+#Create required partitions (BIOS boot partition and /boot)
+reqpart --add-boot
+
+# Create Physical Partition
+part pv.01 --ondrive=nvme0n1 --asprimary --size=40000 --grow --encrypted
+volgroup vg pv.01
+logvol swap --hibernation --vgname=vg --name=swap
+logvol / --vgname=vg --name=fedora-root --size=25000 --grow --fstype=xfs
 
 %post --log=/root/ks-post.log
 # put commands here to run after install
