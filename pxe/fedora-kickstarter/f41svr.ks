@@ -4,13 +4,9 @@
 # Use the following command to generate your grub password hash:
 #   grub2-mkpasswd-pbkdf2
 
-# section order
-#    command
-#        optional addon section
-#    %packages section
-#    %pre %post and %onerror section in any order and not required
-
-#version=DEVEL
+%pre
+modprobe btrfs || echo "Failed to load btrfs module" >> /tmp/kickstart.log
+%end
 
 # Keyboard layouts
 keyboard --vckeymap=us --xlayouts='us'
