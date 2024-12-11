@@ -50,14 +50,18 @@ selinux --disabled
 # System timezone
 timezone America/New_York
 
-# System bootloader configuration
-bootloader --location=mbr --boot-drive=nvme0n1
-
 # automatically partition
-autopart --nohome --type=lvm
-zerombr
-clearpart --all --drives=nvme0n1
 ignoredisk --only-use=nvme0n1
+
+# System bootloader configuration
+bootloader --append="crashkernel=auto" --location=mbr --boot-drive=nvme0n1
+
+# format all disks
+zerombr
+
+clearpart --all --drives=nvme0n1 --initlabel
+
+autopart --nohome --type=lvm
 
 %packages
 net-tools
