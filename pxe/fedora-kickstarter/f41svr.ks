@@ -4,9 +4,13 @@
 # Use the following command to generate your grub password hash:
 #   grub2-mkpasswd-pbkdf2
 
-#%pre
-#modprobe btrfs || echo "Failed to load btrfs module" >> /tmp/kickstart.log
-#%end
+%pre
+# increment version on each update so we can see what file we are running
+# in some cases pushing to github is not immediately visible and we may
+# be running previous file without knowing it and wandering why it keeps
+# failing
+echo "Running kickstart file version: 0.1" >> /tmp/esghome.kickstart.log
+%end
 
 # Keyboard layouts
 keyboard --vckeymap=us --xlayouts='us'
