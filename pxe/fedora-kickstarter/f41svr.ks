@@ -9,7 +9,7 @@
 # in some cases pushing to github is not immediately visible and we may
 # be running previous file without knowing it and wandering why it keeps
 # failing
-echo "Running kickstart file version: 0.3" >> /tmp/esghome.kickstart.log
+echo "Running kickstart file version: 0.4" >> /tmp/esghome.kickstart.log
 %end
 
 # Keyboard layouts
@@ -54,11 +54,7 @@ firstboot --disable
 eula --agreed
 
 # reboot afer installation
-# reboot
-# if kickstart installation failed this will still reboot after a time, try to prevent this
-# --no-reboot was not recognized, maybe deprecated? try just removing reboot command
-# reboot --no-reboot
-halt
+reboot
 
 # SELinux configuration
 selinux --disabled
