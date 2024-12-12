@@ -50,7 +50,9 @@ firstboot --disable
 eula --agreed
 
 # reboot afer installation
-reboot
+# reboot
+# if kickstart installation failed this will still reboot after a time, try to prevent this
+reboot --no-reboot
 
 
 # SELinux configuration
