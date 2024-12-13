@@ -10,7 +10,7 @@
 # in some cases pushing to github is not immediately visible and we may
 # be running previous file without knowing it and wandering why it keeps
 # failing
-echo "Running kickstart file version: 0.5" >> /tmp/esghome.kickstart.log
+echo "Running kickstart file version: 0.6" >> /tmp/esghome.kickstart.log
 %end
 
 # Keyboard layouts
@@ -18,15 +18,18 @@ keyboard --vckeymap=us --xlayouts='us'
 # System language
 lang en_US.UTF-8
 
-# specify initial packages to install
+# specify initial packages to install for stage 1 build
+# NOTE: only install what is needed by ansible for stage 2 build!
 %packages
 net-tools
 curl
 tar
 python3
+python3-libdnf5 # needed by ansible (new for f41)
 %end
 
 # Firewall configuration
+# TODO: revisit
 firewall --disabled
 
 # Disable root user
@@ -54,47 +57,13 @@ eula --agreed
 reboot
 
 # SELinux configuration
+# TODO: revisit
 selinux --disabled
 
 # System timezone
 timezone America/New_York
 
 # Partitioning
-
-## Clearing
-#ignoredisk --only-use=nvme0n1
-
-#clearpart --all --initlabel
-
-#bootloader --location=mbr --boot-drive=nvme0n1
-
-#reqpart --add-boot
-
-#zerombr
-
-# System Disk
-#part /boot/efi             --fstype=efi   --size=600    --ondisk=nvme0n1
-#part /boot                 --fstype=xfs   --size=1024   --ondisk=nvme0n1
-
-#part pv.10                 --fstype=lvmpv --size=61000 --ondisk=nvme0n1 --grow
-#volgroup vg_system pv.10
-#logvol /                   --fstype=xfs   --size=50000  --name=root    --vgname=vg_system
-#logvol /var                --fstype=xfs   --size=5000   --name=var     --vgname=vg_system
-#logvol /var/log            --fstype=xfs   --size=5000   --name=var_log --vgname=vg_system
-
-#autopart
-
-#logvol /home               --fstype="xfs"   --size="5000" --name="home"    --vgname="vg_system" --grow
-
-## Data Disk
-#part pv.20                 --fstype="lvmpv" --size="210000" --ondisk="sda" --grow
-#volgroup vg_data pv.20
-#logvol /var/lib/libvirt    --fstype="xfs"   --size="100000" --name="var_lib_libvirt"    --vgname="vg_data"
-#logvol /var/lib/containers --fstype="xfs"   --size="100000" --name="var_lib_containers" --vgname="vg_data"
-
-#%addon com_redhat_kdump --enable --reserve-mb='auto'
-#%addon com_redhat_kdump --disable
-#%end
 
 bootloader --driveorder=nvme0n1
 
@@ -104,12 +73,11 @@ clearpart --drives=nvme0n1 --all
 # zerombr
 zerombr
 
-#Create required partitions (BIOS boot partition and /boot)
+#Create required partitions for the EFI bootloader
 reqpart --add-boot
 
-# Create Physical Partition
+# create other partitions using a logical volume so it can resize
 part pv.01 --ondrive=nvme0n1 --asprimary --size=40000 --grow
-#--encrypted
 volgroup vg pv.01
 logvol swap --hibernation --vgname=vg --name=swap
 logvol / --vgname=vg --name=fedora-root --size=25000 --grow --fstype=xfs
