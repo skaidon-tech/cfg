@@ -25,7 +25,8 @@ net-tools
 curl
 tar
 python3
-python3-libdnf5 # needed by ansible (new for f41)
+#python3-libdnf5 # needed by ansible (new for f41)
+python3-libdnf
 %end
 
 # Firewall configuration
