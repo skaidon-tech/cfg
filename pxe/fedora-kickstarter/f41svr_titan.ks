@@ -10,8 +10,12 @@
 # in some cases pushing to github is not immediately visible and we may
 # be running previous file without knowing it and wandering why it keeps
 # failing
-echo "Running kickstart file version: 0.6" >> /tmp/esghome.kickstart.log
+echo "Running kickstart file version: 0.7" >> /tmp/esghome.kickstart.log
 %end
+
+# enable update repo so we can get correct packages installed on the first 
+# run without having to update
+repo --name=updates-released-f41 --mirrorlist=https://mirrors.fedoraproject.org/mirrorlist?repo=updates-released-f41&arch=x86_64
 
 # Keyboard layouts
 keyboard --vckeymap=us --xlayouts='us'
@@ -25,8 +29,7 @@ net-tools
 curl
 tar
 python3
-#python3-libdnf5 # needed by ansible (new for f41)
-python3-libdnf
+python3-libdnf5 # needed by ansible (new for f41) seems to not be available in server image but should be available from fedora-updates
 %end
 
 # Firewall configuration
