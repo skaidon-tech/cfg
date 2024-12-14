@@ -10,7 +10,7 @@
 # in some cases pushing to github is not immediately visible and we may
 # be running previous file without knowing it and wandering why it keeps
 # failing
-echo "Running kickstart file version: 0.7.1" >> /tmp/esghome.kickstart.log
+echo "Running kickstart file version: 0.7.2" >> /tmp/esghome.kickstart.log
 %end
 
 # Keyboard layouts
@@ -74,17 +74,23 @@ bootloader --driveorder=nvme0n1
 # Remove all existing partitions
 clearpart --drives=nvme0n1 --all
 
-# zerombr
+# Remove invalid partition info
 zerombr
 
-#Create required partitions for the EFI bootloader
+# Create required partitions for the EFI bootloader
 reqpart --add-boot
 
-# create other partitions using a logical volume so it can resize
-part pv.01 --ondrive=nvme0n1 --asprimary --size=40000 --grow
+# Create a system partition using a logical volume, --size specifies min size
+# and --grow makes it take up the rest of the disk that is left after required 
+# partitions were created. These settings should allow the system to install 
+# with even a 64GB system disk.
+part pv.01 --ondrive=nvme0n1 --size=40000 --grow
 volgroup vg pv.01
-logvol swap --hibernation --vgname=vg --name=swap
-logvol / --vgname=vg --name=fedora-root --size=25000 --grow --fstype=xfs
+logvol / --vgname=vg --name=root --size=25000 --grow --fstype=xfs
+# putting logs on separate volume prevents growing logs from overfilling the 
+# disk and causing cascading failures in other services.
+logvol /var/log --vgname=vg --size=2048 --name=log --fstype=xfs
+
 
 # stuff to do after we are done
 %post --log=/root/ks-post.log
