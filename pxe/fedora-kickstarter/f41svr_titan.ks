@@ -32,9 +32,8 @@ python3
 python3-libdnf5 # needed by ansible (new for f41) seems to not be available in server image but is available in updates
 %end
 
-# Firewall configuration
-# TODO: revisit
-firewall --disabled
+# initial firewall configuration only allows ssh
+firewall --service=ssh
 
 # Disable root user
 rootpw --lock
@@ -60,9 +59,8 @@ eula --agreed
 # reboot afer installation
 reboot
 
-# SELinux configuration
-# TODO: revisit
-selinux --disabled
+# SELinux configuration, default is enforcing
+# selinux --disabled
 
 # System timezone
 timezone America/New_York
