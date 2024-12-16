@@ -103,8 +103,8 @@ sed -i '/GATEWAY/d' /etc/sysconfig/network-scripts/ifcfg-eth2
 sed -i '/DNS1/d' /etc/sysconfig/network-scripts/ifcfg-eth2
 
 # and add them to the eth0 10g
-echo "GATEWAY=192.168.2.1" >> /etc/sysconfig/network-scripts/ifcfg-eth0
-echo "DNS1=8.8.8.8" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+echo "GATEWAY=192.168.3.1" >> /etc/sysconfig/network-scripts/ifcfg-eth0
+echo "DNS1=192.168.3.1" >> /etc/sysconfig/network-scripts/ifcfg-eth0
 
 # Restart network services
 #systemctl restart NetworkManager
