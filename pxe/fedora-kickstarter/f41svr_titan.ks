@@ -89,18 +89,19 @@ logvol / --vgname=vg --name=root --size=25000 --grow --fstype=xfs
 # disk and causing cascading failures in other services.
 logvol /var/log --vgname=vg --size=2048 --name=log --fstype=xfs
 
-# network configuration of the additional 10g interfaces
+# network configuration of the additional 10g interfaces (hopefully this takes affect after the installation)
 network --device=00:0f:53:3f:c8:30 --bootproto=static --ip=192.168.3.170 --netmask=255.255.255.0 --gateway=192.168.3.1 --nameserver=192.168.3.1 --onboot=yes
 network --device=00:0f:53:3f:c8:31 --bootproto=static --ip=192.168.3.171 --netmask=255.255.255.0 --onboot=yes
+network --device=30:d0:42:e8:be:39 --bootproto=static --ip=192.168.3.172 --netmask=255.255.255.0 --onboot=yes
 
 # stuff to do after we are done
 %post --log=/root/ks-post.log
 
 # remove default gateway from 1g interface
-sed -i '/GATEWAY/d' /etc/sysconfig/network-scripts/ifcfg-eth2
+#sed -i '/GATEWAY/d' /etc/sysconfig/network-scripts/ifcfg-eth2
 
 # Restart network services
-systemctl restart NetworkManager
+#systemctl restart NetworkManager
 
 # put commands here to run after install
 # add sudo group to permit passwordless escalation
