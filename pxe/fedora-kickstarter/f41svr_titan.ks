@@ -10,7 +10,7 @@
 # in some cases pushing to github is not immediately visible and we may
 # be running previous file without knowing it and wandering why it keeps
 # failing
-echo "Running kickstart file version: 0.8.3" >> /tmp/esghome.kickstart.log
+echo "Running kickstart file version: 0.8.4" >> /tmp/esghome.kickstart.log
 %end
 
 # Keyboard layouts
@@ -89,11 +89,12 @@ logvol / --vgname=vg --name=root --size=25000 --grow --fstype=xfs
 # disk and causing cascading failures in other services.
 logvol /var/log --vgname=vg --size=2048 --name=log --fstype=xfs
 
-# network configuration of the additional 10g interfaces (hopefully this takes affect after the installation)
-#network --device=30:d0:42:e8:be:39 --bootproto=dhcp --onboot=yes
-#network --device=00:0f:53:3f:c8:30 --bootproto=static --ip=192.168.3.170 --netmask=255.255.255.0 --onboot=yes
-#network --device=00:0f:53:3f:c8:31 --bootproto=static --ip=192.168.3.171 --netmask=255.255.255.0 --onboot=yes
-#network --no-activate --device=00:0f:53:3f:c8:31 --bootproto=static --ip=192.168.3.171 --netmask=255.255.255.0 --onboot=yes
+# initial configuration of the eth2 will be needed to install and get in with ansible
+network --activate --device=eth2 --bootproto=dhcp --onboot=yes
+
+# network configuration of the additional 10g interfaces, will be setup by ansible
+network --no-activate --device=eth0 --bootproto=static --ip=192.168.3.170 --netmask=255.255.255.0 --onboot=yes
+network --no-activate --device=eth1 --bootproto=static --ip=192.168.3.171 --netmask=255.255.255.0 --onboot=yes
 
 # stuff to do after we are done
 %post --log=/root/ks-post.log
@@ -102,7 +103,7 @@ logvol /var/log --vgname=vg --size=2048 --name=log --fstype=xfs
 #sed -i '/GATEWAY/d' /etc/sysconfig/network-scripts/ifcfg-eth2
 #sed -i '/DNS1/d' /etc/sysconfig/network-scripts/ifcfg-eth2
 
-# and add them to the eth0 10g
+# and add them to the eth0 10g to switch
 #echo "GATEWAY=192.168.3.1" >> /etc/sysconfig/network-scripts/ifcfg-eth0
 #echo "DNS1=192.168.3.1" >> /etc/sysconfig/network-scripts/ifcfg-eth0
 
